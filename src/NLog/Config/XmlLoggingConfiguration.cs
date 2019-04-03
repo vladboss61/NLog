@@ -200,7 +200,13 @@ namespace NLog.Config
         /// <returns></returns>
         public static XmlLoggingConfiguration CreateFromXmlString(string xml)
         {
-            return new XmlLoggingConfiguration(xml, string.Empty, LogManager.LogFactory);
+            var logFactory = LogManager.LogFactory;
+            return CreateFromXmlString(xml, logFactory);
+        }
+
+        internal static XmlLoggingConfiguration CreateFromXmlString(string xml, LogFactory logFactory)
+        {
+            return new XmlLoggingConfiguration(xml, string.Empty, logFactory);
         }
 #endif
 

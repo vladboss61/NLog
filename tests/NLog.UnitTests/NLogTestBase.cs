@@ -56,9 +56,14 @@ namespace NLog.UnitTests
 
     public abstract class NLogTestBase
     {
+        protected LogFactory LogFactory { get; }
+
         protected NLogTestBase()
         {
             //reset before every test
+
+            LogFactory = new LogFactory();
+
             if (LogManager.Configuration != null)
             {
                 //flush all events if needed.
@@ -79,6 +84,11 @@ namespace NLog.UnitTests
 #if !NETSTANDARD
             System.Diagnostics.Debug.Listeners.Clear();
 #endif
+        }
+
+        protected XmlLoggingConfiguration CreateConfigFromXmlString(string xml)
+        {
+            return XmlLoggingConfiguration.CreateFromXmlString(xml, LogFactory);
         }
 
         protected void AssertDebugCounter(string targetName, int val)
