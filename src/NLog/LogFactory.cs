@@ -1156,7 +1156,7 @@ namespace NLog
                 return this;    // Skip optional loading of default config, when config is already loaded
             }
 
-            var config = _configLoader.Load(this, configFile);
+            var config = CreateConfig(configFile);
             if (config == null)
             {
                 if (!optional)
@@ -1175,6 +1175,12 @@ namespace NLog
 
             Configuration = config;
             return this;
+        }
+
+        internal LoggingConfiguration CreateConfig(string configFile)
+        {
+            var config = _configLoader.Load(this, configFile);
+            return config;
         }
 
         /// <summary>
